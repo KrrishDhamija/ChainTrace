@@ -1,6 +1,6 @@
-# ChainTrace — Real-time Wallet Alerts
+# ChainTrace — Blockchain Investigation Prototype
 
-ChainTrace is a Node/Express prototype for blockchain wallet intelligence.
+ChainTrace is a Node/Express prototype for live Ethereum screening, explainable wallet risk and investigator-led transaction tracing.
 
 ## Run
 
@@ -47,7 +47,28 @@ Email is optional. Popup alerts work without SMTP.
 
 Add a free Alchemy API key to `.env` for live monitoring. Without it, investigation lookup uses the free Blockscout fallback, but monitoring is disabled.
 
-## v9.1 changes
+## Investigation Workspace
+
+The Investigations section accepts either:
+
+- A complete Ethereum wallet address (`0x` plus 40 hexadecimal characters).
+- A complete Ethereum transaction hash (`0x` plus 64 hexadecimal characters).
+
+Wallet searches retrieve recent incoming and outgoing transfers, calculate explainable behavioral signals, display key counterparties in a relationship graph, and allow the investigator to add the wallet directly to close monitoring. Graph nodes and transaction hashes can be clicked to continue tracing.
+
+Transaction-hash search retrieves the Ethereum transaction, receipt, supported stablecoin transfer logs, sender/recipient relationship, and contextual sender behavior. Transaction search requires the free Alchemy key; wallet search can fall back to Blockscout.
+
+Current explainable indicators include large-value activity, rapid movement, sustained bursts, fan-in, fan-out, immediate forwarding, counterparty concentration, and compounded flow patterns. Scores are screening priorities—not declarations of criminal activity.
+
+The investigation API is available at:
+
+```text
+GET /api/investigate?query=<wallet-address-or-transaction-hash>
+```
+
+Responses are cached for 30 seconds to reduce free-tier requests.
+
+## Current prototype highlights
 
 - Fixed navigation/view switching so each sidebar option displays its own section instead of leaving the dashboard visible.
 - Added cache-busting to `app.js` so the browser does not keep an older JavaScript build.
@@ -57,3 +78,6 @@ Add a free Alchemy API key to `.env` for live monitoring. Without it, investigat
 - Monitored wallets are saved in browser local storage.
 - Monitor Investigate/Remove buttons are now functional.
 - Added clearer monitor status and 20-second scan information.
+- Added global latest-block screening and an explainable risk queue.
+- Added alert cooldown, deduplication and escalation bypass for materially stronger evidence.
+- Added universal wallet/transaction investigation with a native relationship graph and evidence panel.
