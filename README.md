@@ -13,9 +13,9 @@ Open http://localhost:3000
 
 ## Live monitoring
 
-Wallets with a complete Ethereum address are scanned every 20 seconds while the dashboard is open. The screening engine flags explainable prototype risk signals such as large-value transfers and selected high-risk service keywords.
+Wallets with a complete Ethereum address are scanned every 20 seconds while the dashboard is open. Live monitoring uses Alchemy's free Ethereum API tier and supports up to five wallets per browser.
 
-When a new suspicious transaction is detected:
+When a new qualifying transaction is detected:
 
 - ChainTrace shows an immediate on-screen high-risk alert popup.
 - The alert is added to the Alerts and Transactions views.
@@ -23,7 +23,7 @@ When a new suspicious transaction is detected:
 - If SMTP is configured, an email is sent automatically.
 - Duplicate transaction alerts are suppressed in the browser using localStorage.
 
-The first scan establishes a baseline for already-monitored wallets. A wallet newly added through **Add Wallet** is scanned immediately.
+The first scan establishes a baseline, so historical activity does not create popup spam. Later scans alert on new transfers of at least **10 ETH** or **10,000 USDC, USDT, or DAI**.
 
 ## Email alerts
 
@@ -45,7 +45,7 @@ Email is optional. Popup alerts work without SMTP.
 
 ## Blockchain data
 
-Add an Alchemy API key to `.env` for richer transfer categories. Without it, ChainTrace uses the free Blockscout Ethereum API fallback.
+Add a free Alchemy API key to `.env` for live monitoring. Without it, investigation lookup uses the free Blockscout fallback, but monitoring is disabled.
 
 ## v9.1 changes
 
